@@ -1,5 +1,7 @@
 import json
+import base64
 from cr_response import CustomResourceResponse
+import boto3
 
 def get_physical_id(r_properties):
   """ Generated resource id """
@@ -8,14 +10,37 @@ def get_physical_id(r_properties):
   return f's3://{bucket}/{key}'
 
 
-def object_exists(s3_url):
-  pass
 
 def create_update_resource(props):
-  pass
+  bucket = props['Bucket']
+  key = props['Key']
+  content = props['Content']
+  if props.get('ContentBase64', False):
+    content = base64.decodebytes(content.encode('utf-8'))
+  api_arguments = {
+    'Bucket':bucket,
+    'Key':key,
+    'Body':content.encode('utf-8'),
+  }
+  if 'SSE' in props:
+    api_arguments['ServerSideEncryption'] = props['SSE']
+  if 'SSEKmsKeyId' in props:
+    api_arguments['SSEKMSKeyId'] = props['SSEKmsKeyId']
+  if 'BucketKeyEnabled' in props:
+    api_arguments['BucketKeyEnabled'] = props['BucketKeyEnabled']
+  if 'StorageClass' in props:
+    api_arguments['StorageClass'] = props['StorageClass']
+  if 'ACL' in props:
+    api_arguments['ACL'] = props['ACL']
+  
+  boto3.client('s3').put_object(**api_arguments)
+
+
 
 def delete_resource(props):
-  pass
+  bucket = props['Bucket']
+  key = props['Key']
+  boto3.client('s3').delete_object(Bucket=bucket, Key=key)
 
 def cr_handler(event, context):
     """

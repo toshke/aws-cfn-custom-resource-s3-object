@@ -49,7 +49,7 @@ class CustomResourceResponse:
         self._send_response(response)
        
 
-    def respond_error(self, message):
+    def error(self, message):
         """
         Sends error signal back to CloudFormation via S3 signed url
         """
