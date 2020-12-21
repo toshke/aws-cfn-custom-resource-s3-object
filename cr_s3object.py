@@ -42,7 +42,7 @@ def delete_resource(props):
   key = props['Key']
   boto3.client('s3').delete_object(Bucket=bucket, Key=key)
 
-def cr_handler(event, context):
+def handler(event, context):
     """
     Create, Update or Remove S3 object
     as Custom Resource for AWS CloudFormation
@@ -54,11 +54,12 @@ def cr_handler(event, context):
     if not cfn_signal or not properties:
       print('Payload not a valid CFN CR request object')
       return 
-
+    
+    print(f'Processing {cfn_signal} request')
     try:
-      if cfn_signal == 'CREATE' or cfn_signal == 'UPDATE':
+      if cfn_signal == 'Create' or cfn_signal == 'Update':
         create_update_resource(properties)
-      if cfn_signal == 'DELETE':
+      if cfn_signal == 'Delete':
         delete_resource(properties)
       
     except Exception as e:

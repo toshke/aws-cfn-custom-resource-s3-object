@@ -22,7 +22,7 @@ class CustomResourceResponse:
             headers={'Content-Length': len(req_data),'Content-Type': ''}
         )
         req.get_method = lambda: 'PUT'
-        
+        print(f"Responding with\n{json.dumps(resp_object)}")
         try:
             urlopen(req)
             logger.debug("Response to CFN API succeeded, nothing to do here")
