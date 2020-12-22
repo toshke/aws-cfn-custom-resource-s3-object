@@ -53,6 +53,8 @@ class CustomResourceResponse:
         """
         Sends error signal back to CloudFormation via S3 signed url
         """
+        if 'PhysicalResourceId' not in self.response:
+            self.response['PhysicalResourceId'] = self.response['LogicalResourceId']
         self.response['Status'] = 'FAILED'
         self.response['Reason'] = message
         self._send_response(self.response)
