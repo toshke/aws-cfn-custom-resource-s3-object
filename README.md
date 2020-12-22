@@ -1,14 +1,12 @@
 ## S3 Object Custom Resource
 
-!! WIP !!
-
 ### Intro
 
 Custom resource implementation for s3 object creation with given bucket.
 Configure Bucket, Key, Content and EncryptionOptions. Optionally base64 encode the content. 
 
 This repo illustrates some points from 
-[9 Best Practices for writing CloudFormation custom resources]()
+[9 Best Practices for writing CloudFormation custom resources](https://toshke.medium.com/cloudformation-custom-resources-best-practices-97cb4e3dbed3)
 
 
 #### Usage
