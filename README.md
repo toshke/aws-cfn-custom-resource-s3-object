@@ -37,11 +37,12 @@ Sample AWS SAM template can be found in `template.cfn.yaml`. This template is bu
 
 Following resource properties are currently supported:
 
-- Bucket
-- Key
-- Content (base64 or not)
-- SSE Encryption
-- KMS Encryption Key
+- `Bucket` - Bucket to PUT the object
+- `Key` - S3 Object Key
+- `Content` - Object content. Plain text or base64 encoded.
+- `ContentBase64` - Set to `true` if content is base64 encoded
+- `SSE` - SSE Encryption at rest. Either default Amazon S3 (AES256), or `aws:kms`
+- `SSEKmsKeyId` - Used only if `SSE=aws:kms` , KMS Key to use for encryption, e.g. `alias/aws/s3` for AWS managed s3 key
 
 ### Return values
 

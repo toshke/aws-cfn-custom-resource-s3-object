@@ -66,11 +66,12 @@ Resources:
             ServiceToken: !GetAtt BackingLambda.Arn
             Bucket: !Ref Bucket
             Key: !Ref ObjectKey
-            Content: !Ref ObjectContent
+            Content: 
+                Fn::Base64: !Ref ObjectContent
             ACL: !Ref ObjectACL
             SSE: !Ref SSE
             SSEKmsKeyId: !If [KMSEncryption, 'alias/aws/s3', !Ref AWS::NoValue ]
-
+            ContentBase64: true
 Outputs:
     S3Url:
         Value: !Ref MyS3Object

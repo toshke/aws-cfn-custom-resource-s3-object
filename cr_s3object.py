@@ -17,10 +17,12 @@ def create_update_resource(props):
   content = props['Content']
   if props.get('ContentBase64', False):
     content = base64.decodebytes(content.encode('utf-8'))
+  else:
+    content = content.encode('utf-8')
   api_arguments = {
     'Bucket':bucket,
     'Key':key,
-    'Body':content.encode('utf-8'),
+    'Body': content,
   }
   if 'SSE' in props:
     api_arguments['ServerSideEncryption'] = props['SSE']
