@@ -11,7 +11,8 @@ This repo illustrates some points from
 
 #### Usage
 
-You can either copy/paste `cr_response.py` and `cr_s3object.py` files, or look at `template.cfn.yaml` for 
+You can either copy/paste `cr_response.py` and `cr_s3object.py` files, or look at `template.cfn.yaml` for usage example. `scripts/build.sh` does the 
+SAM build. 
 
 ### Test deployment
 
