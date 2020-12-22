@@ -34,13 +34,14 @@ def create_update_resource(props):
     api_arguments['ACL'] = props['ACL']
   
   boto3.client('s3').put_object(**api_arguments)
-
+  return f's3://{bucket}/{key}'
 
 
 def delete_resource(props):
-  bucket = props['Bucket']
-  key = props['Key']
-  boto3.client('s3').delete_object(Bucket=bucket, Key=key)
+   
+    bucket = props['Bucket']
+    key = props['Key']
+    boto3.client('s3').delete_object(Bucket=bucket, Key=key)
 
 def handler(event, context):
     """
@@ -58,9 +59,11 @@ def handler(event, context):
     print(f'Processing {cfn_signal} request')
     try:
       if cfn_signal == 'Create' or cfn_signal == 'Update':
-        create_update_resource(properties)
+        s3_url = create_update_resource(properties)
+        cfn_response.success(physical_id=s3_url)
       if cfn_signal == 'Delete':
         delete_resource(properties)
-      
+        cfn_response.success()
+        
     except Exception as e:
       cfn_response.error(str(e))

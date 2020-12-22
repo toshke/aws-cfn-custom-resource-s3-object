@@ -1,10 +1,18 @@
 AWSTemplateFormatVersion: "2010-09-09"
 Transform: AWS::Serverless-2016-10-31
 Parameters:
-    CreateObjects:
+    CreateObject:
         Type: String
         Default: false
         AllowedValues: [true, false]
+    ObjectKey:
+        Type: String
+        Default: 'hello_world.txt'
+    ObjectContent:
+        Type: String
+        Default: 'Hello World, I am Custom Resource!!!'
+Conditions:
+    CreateObject: !Equals [ !Ref CreateObject, true ]
 Resources:
     Bucket:
         Type: AWS::S3::Bucket
@@ -40,3 +48,12 @@ Resources:
             Runtime: python3.8
             Handler: cr_s3object.handler
             Role: !GetAtt BackingLambdaRole.Arn
+
+    MyS3Object:
+        Type: Custom::S3Object
+        Condition: CreateObject
+        Properties:
+            ServiceToken: !GetAtt BackingLambda.Arn
+            Bucket: !Ref Bucket
+            Key: !Ref ObjectKey
+            Content: !Ref ObjectContent

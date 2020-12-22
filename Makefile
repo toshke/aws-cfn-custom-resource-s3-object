@@ -1,5 +1,8 @@
 
 DEPLOYMENT_PREFIX=$(shell date +%s)
+CREATE_OBJECT ?= false
+OBJECT_KEY ?= hello_world.txt
+OBJECT_CONTENT ?= Hello, world!
 
 build:  ## Creates necessary artifacts for test deployment of the custom resource
 	scripts/build.sh
