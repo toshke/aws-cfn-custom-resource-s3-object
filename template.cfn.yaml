@@ -70,3 +70,7 @@ Resources:
             ACL: !Ref ObjectACL
             SSE: !Ref SSE
             SSEKmsKeyId: !If [KMSEncryption, 'alias/aws/s3', !Ref AWS::NoValue ]
+
+Outputs:
+    S3Url:
+        Value: !Ref MyS3Object

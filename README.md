@@ -45,5 +45,5 @@ Following resource properties are currently supported:
 
 ### Return values
 
-Use `Fn::GetAtt` to read following attributes within the template
+Use `Ref !CustomObject` to get s3 url `s3://bucket/key` 
 
